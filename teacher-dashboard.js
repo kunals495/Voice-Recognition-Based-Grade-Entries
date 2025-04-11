@@ -36,6 +36,38 @@ recognition.onresult = (event) => {
   const voiceStatus = document.getElementById('voiceStatus');
   voiceStatus.textContent = `Recognized: ${transcript}`;
   
+  // Handle student details input
+  if (transcript.includes('student')) {
+    const nameMatch = transcript.match(/student\s+([a-zA-Z\s]+)/);
+    if (nameMatch) {
+      const studentName = nameMatch[1].trim();
+      const tbody = document.getElementById('marksTableBody');
+      if (!tbody.lastElementChild || tbody.lastElementChild.querySelector('.student-name').value) {
+        // Add new row if last row is filled
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <td><input type="text" class="roll-no" placeholder="Roll No" required></td>
+          <td><input type="text" class="student-name" placeholder="Student Name" required></td>
+          <td><input type="number" class="marks-obtained" placeholder="Marks" required min="0"></td>
+          <td><input type="number" class="marks-total" placeholder="Total" required min="0"></td>
+        `;
+        tbody.appendChild(newRow);
+      }
+      tbody.lastElementChild.querySelector('.student-name').value = studentName.charAt(0).toUpperCase() + studentName.slice(1);
+    }
+  }
+  
+  if (transcript.includes('roll')) {
+    const rollMatch = transcript.match(/roll\s+(\d+)/);
+    if (rollMatch) {
+      const rollNo = rollMatch[1];
+      const tbody = document.getElementById('marksTableBody');
+      if (tbody.lastElementChild) {
+        tbody.lastElementChild.querySelector('.roll-no').value = rollNo;
+      }
+    }
+  }
+
   // Parse the voice input
   if (transcript.includes('semester')) {
     const semesterMatch = transcript.match(/semester (\d)/);
