@@ -37,15 +37,45 @@
     <div class="marks-entry-section">
       <h3>Enter Marks</h3>
       <form id="marksForm">
-        <select id="semesterSelect">
-          <option value="">Select Semester</option>
-          <option value="1">Semester 1</option>
-          <option value="2">Semester 2</option>
-          <option value="3">Semester 3</option>
-        </select>
-        <input type="text" id="studentRoll" placeholder="Student Roll Number">
-        <input type="number" id="marks" placeholder="Marks">
-        <button type="submit">Submit Marks</button>
+        <div class="form-group">
+          <select id="semesterSelect" required>
+            <option value="">Select Semester</option>
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+            <option value="3">Semester 3</option>
+          </select>
+          <select id="subjectSelect" required>
+            <option value="">Select Subject</option>
+            <option value="BDA">Big Data Analytics</option>
+            <option value="ML">Machine Learning</option>
+            <option value="CC">Cloud Computing</option>
+          </select>
+          <select id="examType" required>
+            <option value="">Select Exam Type</option>
+            <option value="UT">Unit Test</option>
+            <option value="MSE">MSE</option>
+            <option value="ESE">ESE</option>
+          </select>
+        </div>
+        
+        <div class="marks-table">
+          <table id="studentMarksTable">
+            <thead>
+              <tr>
+                <th>Roll No</th>
+                <th>Student Name</th>
+                <th>Marks Obtained</th>
+                <th>Out Of</th>
+              </tr>
+            </thead>
+            <tbody id="marksTableBody">
+              <!-- Rows will be added dynamically -->
+            </tbody>
+          </table>
+          <button type="button" id="addRow">+ Add Student</button>
+        </div>
+        
+        <button type="submit" class="submit-marks">Submit All Marks</button>
       </form>
     </div>
   </main>
