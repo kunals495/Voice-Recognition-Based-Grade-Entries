@@ -62,3 +62,47 @@ body {
 .subject-marks:last-child {
   border-bottom: none;
 }
+
+/* Teacher Dashboard Styles */
+.marks-entry-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.marks-entry-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.marks-entry-section select,
+.marks-entry-section input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.marks-entry-section button {
+  background: #1a237e;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.semester-list {
+  margin-top: 10px;
+}
+
+.semester-list .semester {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.semester-list .semester:hover {
+  background: rgba(255,255,255,0.2);
+}

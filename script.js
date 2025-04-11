@@ -50,7 +50,7 @@ document.querySelector('#loginForm').addEventListener('submit', async (e) => {
     if (currentRole === 'student') {
       window.location.href = 'student-dashboard.html';
     } else {
-      window.location.href = '/teacher-dashboard';
+      window.location.href = 'teacher-dashboard.html';
     }
   } catch (error) {
     alert(error.message || 'Login failed. Please try again.');
