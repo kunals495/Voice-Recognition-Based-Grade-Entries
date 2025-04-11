@@ -38,10 +38,27 @@ body {
 .semester {
   margin-bottom: 20px;
   background: rgba(255,255,255,0.1);
-  padding: 10px;
-  border-radius: 4px;
+  padding: 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.semester:hover {
+  background: rgba(255,255,255,0.2);
+  transform: translateX(5px);
 }
 
 .marks-list {
   margin-top: 10px;
+}
+
+.subject-marks {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.subject-marks:last-child {
+  border-bottom: none;
 }

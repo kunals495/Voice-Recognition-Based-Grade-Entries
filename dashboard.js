@@ -17,9 +17,20 @@ document.getElementById('email').textContent = `Email: ${studentData.email}`;
 const marksData = {
   sem1: [
     { subject: "Mathematics I", marks: 85 },
-    { subject: "Physics", marks: 78 }
+    { subject: "Physics", marks: 78 },
+    { subject: "Chemistry", marks: 82 },
+    { subject: "Basic Electronics", marks: 75 }
+  ],
+  sem2: [
+    { subject: "Mathematics II", marks: 88 },
+    { subject: "Programming", marks: 92 },
+    { subject: "Digital Electronics", marks: 85 }
+  ],
+  sem3: [
+    { subject: "Data Structures", marks: 90 },
+    { subject: "Database Systems", marks: 87 },
+    { subject: "Computer Networks", marks: 82 }
   ]
-  // Add more semester data as needed
 };
 
 // Load marks data
@@ -35,5 +46,7 @@ function displayMarks(semId, marks) {
   });
 }
 
-// Display marks for semester 1
-displayMarks('sem1', marksData.sem1);
+// Display marks for all semesters
+Object.entries(marksData).forEach(([semId, marks]) => {
+  displayMarks(semId, marks);
+});
