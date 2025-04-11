@@ -48,7 +48,7 @@ document.querySelector('#loginForm').addEventListener('submit', async (e) => {
 
     // Redirect to dashboard on success
     if (currentRole === 'student') {
-      window.location.href = '/student-dashboard';
+      window.location.href = 'student-dashboard.html';
     } else {
       window.location.href = '/teacher-dashboard';
     }
