@@ -26,6 +26,54 @@ document.getElementById('addRow').addEventListener('click', () => {
 });
 
 // Handle form submission
+// Voice recognition setup
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+recognition.continuous = false;
+recognition.lang = 'en-US';
+
+recognition.onresult = (event) => {
+  const transcript = event.results[0][0].transcript.toLowerCase();
+  const voiceStatus = document.getElementById('voiceStatus');
+  voiceStatus.textContent = `Recognized: ${transcript}`;
+  
+  // Parse the voice input
+  if (transcript.includes('semester')) {
+    const semesterMatch = transcript.match(/semester (\d)/);
+    if (semesterMatch) {
+      document.getElementById('semesterSelect').value = semesterMatch[1];
+    }
+  }
+  
+  if (transcript.includes('subject')) {
+    const subjects = ['bda', 'ml', 'cc'];
+    for (const subject of subjects) {
+      if (transcript.includes(subject)) {
+        document.getElementById('subjectSelect').value = subject.toUpperCase();
+        break;
+      }
+    }
+  }
+  
+  if (transcript.includes('exam')) {
+    if (transcript.includes('unit test')) {
+      document.getElementById('examType').value = 'UT';
+    } else if (transcript.includes('mse')) {
+      document.getElementById('examType').value = 'MSE';
+    } else if (transcript.includes('ese')) {
+      document.getElementById('examType').value = 'ESE';
+    }
+  }
+};
+
+recognition.onerror = (event) => {
+  document.getElementById('voiceStatus').textContent = `Error: ${event.error}`;
+};
+
+document.getElementById('voiceInputBtn').addEventListener('click', () => {
+  document.getElementById('voiceStatus').textContent = 'Listening...';
+  recognition.start();
+});
+
 document.getElementById('marksForm').addEventListener('submit', (e) => {
   e.preventDefault();
   

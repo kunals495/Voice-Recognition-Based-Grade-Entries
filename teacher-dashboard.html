@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Teacher Dashboard - KBPCOES</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link href="dashboard-style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -42,6 +43,11 @@
     <div class="marks-entry-section">
       <h3>Enter Marks</h3>
       <form id="marksForm">
+        <button type="button" id="voiceInputBtn" class="voice-input-btn">
+          <i class="fas fa-microphone"></i> Voice Input
+        </button>
+        <div id="voiceStatus" class="voice-status"></div>
+        
         <div class="form-group">
           <select id="semesterSelect" required>
             <option value="">Select Semester</option>

@@ -153,6 +153,29 @@ body {
   margin: 10px 0;
 }
 
+.voice-input-btn {
+  background: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.voice-input-btn:hover {
+  background: #45a049;
+}
+
+.voice-status {
+  margin: 10px 0;
+  font-style: italic;
+  color: #666;
+}
+
 .submit-marks {
   background: #1a237e;
   color: white;
