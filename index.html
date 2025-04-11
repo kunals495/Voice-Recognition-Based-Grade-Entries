@@ -1,16 +1,51 @@
+
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>replit</title>
+  <title>KBPCOES - Academic Portal</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
-
 <body>
-  Hello world
+  <header>
+    <h1>Karmaveer Bhaurao Patil College of Engineering Satara</h1>
+    <h2>Academic Mark Entry Portal</h2>
+  </header>
+  
+  <div class="auth-container">
+    <div class="auth-box">
+      <h3>Login</h3>
+      <div class="role-toggle">
+        <button class="active" onclick="toggleRole('student')">Student</button>
+        <button onclick="toggleRole('teacher')">Teacher</button>
+      </div>
+      <form id="loginForm">
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+      <p>New user? <a href="#" onclick="showSignup()">Sign up</a></p>
+    </div>
+
+    <div class="auth-box hidden" id="signupBox">
+      <h3>Sign Up</h3>
+      <div class="role-toggle">
+        <button class="active" onclick="toggleRole('student')">Student</button>
+        <button onclick="toggleRole('teacher')">Teacher</button>
+      </div>
+      <form id="signupForm">
+        <input type="text" placeholder="Full Name" required>
+        <input type="text" placeholder="Roll Number" class="student-field" required>
+        <input type="text" placeholder="PRN Number" class="student-field" required>
+        <input type="text" placeholder="Subject" class="teacher-field hidden" required>
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit">Sign Up</button>
+      </form>
+      <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
-
 </html>
