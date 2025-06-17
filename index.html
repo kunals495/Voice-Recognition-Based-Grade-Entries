@@ -1,51 +1,203 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>KBPCOES - Academic Portal</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-  <header>
-    <h1>Karmaveer Bhaurao Patil College of Engineering Satara</h1>
-    <h2>Academic Mark Entry Portal</h2>
-  </header>
-  
-  <div class="auth-container">
-    <div class="auth-box">
-      <h3>Login</h3>
-      <div class="role-toggle">
-        <button class="active" onclick="toggleRole('student')">Student</button>
-        <button onclick="toggleRole('teacher')">Teacher</button>
-      </div>
-      <form id="loginForm">
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-      </form>
-      <p>New user? <a href="#" onclick="showSignup()">Sign up</a></p>
-    </div>
+<header>
+    <img src="images/Header.jpg" alt="KBP College Header">
+</header>
 
-    <div class="auth-box hidden" id="signupBox">
-      <h3>Sign Up</h3>
-      <div class="role-toggle">
-        <button class="active" onclick="toggleRole('student')">Student</button>
-        <button onclick="toggleRole('teacher')">Teacher</button>
-      </div>
-      <form id="signupForm">
-        <input type="text" placeholder="Full Name" required>
-        <input type="text" placeholder="Roll Number" class="student-field" required>
-        <input type="text" placeholder="PRN Number" class="student-field" required>
-        <input type="text" placeholder="Subject" class="teacher-field hidden" required>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <button type="submit">Sign Up</button>
-      </form>
-      <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+<div class="main-container">
+    <div class="left-bg-image"></div>
+    <div class="auth-container">
+        <div id="loginBox" class="auth-box">
+            <h2>Login</h2>
+            <div class="role-toggle">
+                <button type="button" class="active" onclick="toggleRole('student')">Student</button>
+                <button type="button" onclick="toggleRole('teacher')">Teacher</button>
+            </div>
+            <form id="loginForm" data-role="student">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <div class="error-message" id="login-error" style="display: none;"></div>
+                <button type="submit">Login</button>
+                <p>New user? <a href="#" onclick="showSignup()">Sign up</a></p>
+            </form>
+        </div>
+
+        <div id="signupBox" class="auth-box hidden">
+            <h2>Sign Up</h2>
+            <div class="role-toggle">
+                <button type="button" class="active" onclick="toggleRole('student')">Student</button>
+                <button type="button" onclick="toggleRole('teacher')">Teacher</button>
+            </div>
+            <form id="signupForm" data-role="student">
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+
+                <!-- Student-only fields -->
+                <input type="text" name="roll_number" placeholder="Roll Number" class="student-field">
+                <input type="text" name="prn_number" placeholder="PRN Number" class="student-field">
+                <select name="division" class="student-field">
+                    <option value="" disabled selected>Select Division</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                </select>
+                <select name="year" class="student-field">
+                    <option value="" disabled selected>Select Year</option>
+                    <option value="FE">FE</option>
+                    <option value="SE">SE</option>
+                    <option value="TE">TE</option>
+                    <option value="BE">BE</option>
+                </select>
+                <select name="branch" class="student-field">
+                    <option value="" disabled selected>Select Branch</option>
+                    <option value="CSE">CSE</option>
+                    <option value="E & TC">E & TC</option>
+                    <option value="Civil">Civil</option>
+                    <option value="Mechanical">Mechanical</option>
+                </select>
+
+                <!-- Teacher-only field -->
+                <input type="text" name="subject" placeholder="Subject" class="teacher-field hidden" data-required="true">
+
+                <div class="error-message" id="signup-error" style="display: none;"></div>
+                <button type="submit">Sign Up</button>
+                <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+            </form>
+        </div>
     </div>
-  </div>
-  <script src="script.js"></script>
+</div>
+
+<footer class="footer">
+    <div class="footer-left">
+        <a href="https://www.facebook.com/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.youtube.com/" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.instagram.com/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <div class="footer-right">
+        Karmaveer Bhaurao Patil College of Engineering, Satara
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        toggleRole('student');
+    });
+
+    function toggleRole(role) {
+        role = role.toLowerCase();
+        document.querySelectorAll('.auth-box .role-toggle').forEach(toggle => {
+            toggle.querySelectorAll('button').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase() === role);
+            });
+        });
+
+        document.querySelectorAll('.student-field').forEach(el => {
+            el.classList.toggle('hidden', role !== 'student');
+            role === 'student' ? el.setAttribute('required', 'required') : el.removeAttribute('required');
+        });
+
+        document.querySelectorAll('.teacher-field').forEach(el => {
+            el.classList.toggle('hidden', role !== 'teacher');
+            if (role === 'teacher' && el.dataset.required === "true") {
+                el.setAttribute('required', 'required');
+            } else {
+                el.removeAttribute('required');
+            }
+        });
+
+        document.querySelectorAll('form').forEach(form => {
+            form.setAttribute('data-role', role);
+        });
+    }
+
+    function showSignup() {
+        document.getElementById('signupBox').classList.remove('hidden');
+        document.getElementById('loginBox').classList.add('hidden');
+        const role = document.querySelector('#signupBox .role-toggle button.active').textContent.toLowerCase();
+        toggleRole(role);
+    }
+
+    function showLogin() {
+        document.getElementById('signupBox').classList.add('hidden');
+        document.getElementById('loginBox').classList.remove('hidden');
+        const role = document.querySelector('#loginBox .role-toggle button.active').textContent.toLowerCase();
+        toggleRole(role);
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const errorDiv = document.getElementById('login-error');
+        errorDiv.style.display = 'none';
+        const role = this.getAttribute('data-role');
+        const formData = new FormData(this);
+        formData.append('role', role);
+
+        try {
+            const res = await fetch('login.php', { method: 'POST', body: formData });
+            const data = await res.json();
+            if (data.success) {
+                window.location.href = data.redirect;
+            } else {
+                errorDiv.textContent = data.message || 'Invalid credentials';
+                errorDiv.style.display = 'block';
+            }
+        } catch (error) {
+            errorDiv.textContent = 'Error: ' + error.message;
+            errorDiv.style.display = 'block';
+        }
+    });
+
+    document.getElementById('signupForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const errorDiv = document.getElementById('signup-error');
+        errorDiv.style.display = 'none';
+        const role = this.getAttribute('data-role');
+        const formData = new FormData(this);
+        formData.append('role', role);
+
+        if (role === 'student') {
+            const fields = ['roll_number', 'prn_number', 'division', 'year', 'branch'];
+            for (const field of fields) {
+                if (!formData.get(field)) {
+                    errorDiv.textContent = `Please fill in all student fields.`;
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+            }
+        } else if (role === 'teacher') {
+            if (!formData.get('subject')) {
+                errorDiv.textContent = 'Please provide a subject.';
+                errorDiv.style.display = 'block';
+                return;
+            }
+        }
+
+        try {
+            const res = await fetch('signup.php', { method: 'POST', body: formData });
+            const data = await res.json();
+            if (data.success) {
+                showLogin();
+            } else {
+                errorDiv.textContent = data.message || 'Signup failed';
+                errorDiv.style.display = 'block';
+            }
+        } catch (error) {
+            errorDiv.textContent = 'Error: ' + error.message;
+            errorDiv.style.display = 'block';
+        }
+    });
+</script>
 </body>
 </html>

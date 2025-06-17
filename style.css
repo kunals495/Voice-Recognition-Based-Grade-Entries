@@ -1,89 +1,162 @@
-
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: url('attached_assets/WhatsApp Image 2025-04-11 at 11.15.12 PM.jpeg') no-repeat center center fixed;
-  background-size: cover;
-  min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-header {
-  background: #1a237e;
-  color: white;
-  text-align: center;
-  padding: 2rem;
+header img {
+    width: 100%;
+    height: 129px;
+    object-fit: cover;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 2rem;
+.main-container {
+    display: flex;
+    flex: 1;
+    min-height: calc(100vh - 180px); /* header + footer height */
+    margin-bottom: 51px; /* Match footer height */
 }
 
-header h2 {
-  margin: 1rem 0 0;
-  font-weight: normal;
+.left-bg-image {
+    flex: 1;
+    background: url('attached_assets/WhatsApp Image 2025-04-11 at 11.15.12 PM.jpeg') no-repeat center center;
+    background-size: cover;
 }
 
 .auth-container {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f4f4f4;
 }
 
 .auth-box {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  backdrop-filter: blur(5px);
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .auth-box.hidden {
-  display: none;
+    display: none;
 }
 
 .role-toggle {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .role-toggle button {
-  flex: 1;
-  padding: 0.5rem;
-  border: 1px solid #1a237e;
-  background: none;
-  color: #1a237e;
-  cursor: pointer;
-  border-radius: 4px;
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #1a237e;
+    background: none;
+    color: #1a237e;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 .role-toggle button.active {
-  background: #1a237e;
-  color: white;
+    background: #1a237e;
+    color: white;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-input {
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+input, select {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%231a237e" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+}
+
+input:invalid {
+    border-color: #ff4d4d;
+}
+
+.error-message {
+    color: #ff4d4d;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
 }
 
 button[type="submit"] {
-  background: #1a237e;
-  color: white;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+    background: #1a237e;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .hidden {
-  display: none;
+    display: none;
+}
+
+.footer {
+  background-color: #003366;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px;
+  position: relative;
+  height: 51px;
+  bottom: 0;
+}
+
+.footer-left .social-icon {
+  color: white;
+  text-decoration: none;
+  margin-right: 15px;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.footer-left .social-icon:hover {
+  color: #ffd700;
+}
+
+.footer-right {
+  font-weight: bold;
+  text-align: right;
+  font-size: 15px;
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+    .left-bg-image {
+        height: 200px;
+        flex: none;
+    }
+    .auth-container {
+        padding: 1rem;
+    }
 }

@@ -1,0 +1,101 @@
+/* General styles for tables */
+.marks-table, .assignments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Table headers and cells */
+.marks-table th, .marks-table td,
+.assignments-table th, .assignments-table td {
+    border: 1px solid #ddd;
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 14px;
+}
+
+/* Table headers */
+.marks-table th, .assignments-table th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Alternating row colors for readability */
+.marks-table tr:nth-child(even),
+.assignments-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Hover effect on rows */
+.marks-table tr:hover,
+.assignments-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Total label styling */
+.total-label {
+    text-align: right;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Download form and button styling */
+.download-form {
+    margin-top: 15px;
+}
+
+.download-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.download-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Download link styling */
+.download-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.download-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+/* Headings */
+h2, h3 {
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 18px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+/* Paragraphs */
+p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}

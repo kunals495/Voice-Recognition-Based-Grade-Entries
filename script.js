@@ -1,106 +1,175 @@
-
-let currentRole = 'student';
+document.addEventListener('DOMContentLoaded', () => {
+    const activeRoleBtn = document.querySelector('.auth-box .role-toggle button.active');
+    const role = activeRoleBtn ? activeRoleBtn.textContent.toLowerCase() : 'student';
+    toggleRole(role);
+});
 
 function toggleRole(role) {
-  currentRole = role;
-  const buttons = document.querySelectorAll('.role-toggle button');
-  buttons.forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-  
-  const studentFields = document.querySelectorAll('.student-field');
-  const teacherFields = document.querySelectorAll('.teacher-field');
-  
-  if (role === 'student') {
-    studentFields.forEach(f => f.classList.remove('hidden'));
-    teacherFields.forEach(f => f.classList.add('hidden'));
-  } else {
-    studentFields.forEach(f => f.classList.add('hidden'));
-    teacherFields.forEach(f => f.classList.remove('hidden'));
-  }
+    role = role.toLowerCase();
+
+    const allRoleToggles = document.querySelectorAll('.auth-box .role-toggle');
+
+    allRoleToggles.forEach(toggleGroup => {
+        const buttons = toggleGroup.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.classList.toggle('active', btn.textContent.toLowerCase() === role);
+        });
+    });
+
+    const studentFields = document.querySelectorAll('.student-field');
+    const teacherFields = document.querySelectorAll('.teacher-field');
+
+    studentFields.forEach(el => el.classList.toggle('hidden', role !== 'student'));
+    teacherFields.forEach(el => el.classList.toggle('hidden', role !== 'teacher'));
+
+    teacherFields.forEach(el => {
+        if (role === 'teacher' && el.getAttribute('data-required') === 'true') {
+            el.setAttribute('required', 'required');
+        } else {
+            el.removeAttribute('required');
+        }
+    });
+
+    studentFields.forEach(el => {
+        if (role === 'student') {
+            el.setAttribute('required', 'required');
+        } else {
+            el.removeAttribute('required');
+        }
+    });
+
+    document.querySelectorAll('form').forEach(form => form.setAttribute('data-role', role));
 }
 
 function showSignup() {
-  document.querySelector('#loginForm').parentElement.classList.add('hidden');
-  document.querySelector('#signupBox').classList.remove('hidden');
+    document.getElementById('signupBox').classList.remove('hidden');
+    document.getElementById('loginBox').classList.add('hidden');
+
+    const currentRoleBtn = document.querySelector('#signupBox .role-toggle button.active');
+    const role = currentRoleBtn ? currentRoleBtn.textContent.toLowerCase() : 'student';
+    toggleRole(role);
 }
 
 function showLogin() {
-  document.querySelector('#loginForm').parentElement.classList.remove('hidden');
-  document.querySelector('#signupBox').classList.add('hidden');
+    document.getElementById('signupBox').classList.add('hidden');
+    document.getElementById('loginBox').classList.remove('hidden');
+
+    const currentRoleBtn = document.querySelector('#loginBox .role-toggle button.active');
+    const role = currentRoleBtn ? currentRoleBtn.textContent.toLowerCase() : 'student';
+    toggleRole(role);
 }
 
-document.querySelector('#loginForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = e.target.elements[0].value;
-  const password = e.target.elements[1].value;
-  
-  try {
-    // Add loading state
-    const submitBtn = e.target.querySelector('button');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Signing in...';
+document.getElementById('loginForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const errorDiv = document.getElementById('login-error');
+    errorDiv.style.display = 'none';
 
-    // Here you would make an API call to verify credentials
-    // For demo, we'll simulate a check
+    const role = this.getAttribute('data-role');
+    const formData = new FormData(this);
+    formData.append('role', role);
+
+    const email = formData.get('email');
+    const password = formData.get('password');
     if (!email || !password) {
-      throw new Error('Please fill in all fields');
+        errorDiv.textContent = 'Please fill in all required fields.';
+        errorDiv.style.display = 'block';
+        return;
     }
 
-    // Redirect to dashboard on success
-    if (currentRole === 'student') {
-      window.location.href = 'student-dashboard.html';
-    } else {
-      window.location.href = 'teacher-dashboard.html';
+    try {
+        const res = await fetch('login.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        let data;
+        try {
+            data = await res.json();
+        } catch {
+            const text = await res.text();
+            console.error('Non-JSON response:', text);
+            errorDiv.textContent = 'Server error: Invalid response format';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        if (data.success) {
+            window.location.href = data.redirect;
+        } else {
+            errorDiv.textContent = data.message || 'Invalid credentials';
+            errorDiv.style.display = 'block';
+        }
+    } catch (error) {
+        errorDiv.textContent = 'Error: ' + error.message;
+        errorDiv.style.display = 'block';
     }
-  } catch (error) {
-    alert(error.message || 'Login failed. Please try again.');
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Login';
-  }
 });
 
-document.querySelector('#signupForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  try {
-    const formData = {
-      name: e.target.elements[0].value,
-      rollNumber: currentRole === 'student' ? e.target.elements[1].value : null,
-      prnNumber: currentRole === 'student' ? e.target.elements[2].value : null,
-      subject: currentRole === 'teacher' ? e.target.elements[1].value : null,
-      email: e.target.elements[3].value,
-      password: e.target.elements[4].value,
-      role: currentRole
-    };
+document.getElementById('signupForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const errorDiv = document.getElementById('signup-error');
+    errorDiv.style.display = 'none';
 
-    // Add loading state
-    const submitBtn = e.target.querySelector('button');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Creating Account...';
+    const role = this.getAttribute('data-role');
+    const formData = new FormData(this);
+    formData.append('role', role);
 
-    // Validate fields
-    if (!formData.name || !formData.email || !formData.password) {
-      throw new Error('Please fill in all required fields');
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const password = formData.get('password');
+
+    if (!name || !email || !password) {
+        errorDiv.textContent = 'Please fill in all required fields.';
+        errorDiv.style.display = 'block';
+        return;
     }
 
-    if (currentRole === 'student' && (!formData.rollNumber || !formData.prnNumber)) {
-      throw new Error('Roll number and PRN number are required for students');
+    if (role === 'student') {
+        const roll = formData.get('roll_number');
+        const prn = formData.get('prn_number');
+        const division = formData.get('division');
+        const year = formData.get('year');
+        const branch = formData.get('branch');
+
+        if (!roll || !prn || !division || !year || !branch) {
+            errorDiv.textContent = 'Please provide roll number, PRN number, division, year, and branch.';
+            errorDiv.style.display = 'block';
+            return;
+        }
+    } else if (role === 'teacher') {
+        const subject = formData.get('subject');
+        if (!subject) {
+            errorDiv.textContent = 'Please provide a subject.';
+            errorDiv.style.display = 'block';
+            return;
+        }
     }
 
-    if (currentRole === 'teacher' && !formData.subject) {
-      throw new Error('Subject is required for teachers');
+    try {
+        const res = await fetch('signup.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        let data;
+        try {
+            data = await res.json();
+        } catch {
+            const text = await res.text();
+            console.error('Non-JSON response:', text);
+            errorDiv.textContent = 'Server error: Invalid response format';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        if (data.success) {
+            showLogin();
+        } else {
+            errorDiv.textContent = data.message || 'Signup failed';
+            errorDiv.style.display = 'block';
+        }
+    } catch (error) {
+        errorDiv.textContent = 'Error: ' + error.message;
+        errorDiv.style.display = 'block';
     }
-
-    // Here you would make an API call to create the account
-    // For demo, we'll simulate success
-    showLogin();
-    alert('Account created successfully! Please login.');
-
-  } catch (error) {
-    alert(error.message || 'Signup failed. Please try again.');
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Sign Up';
-  }
 });
